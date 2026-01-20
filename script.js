@@ -36,7 +36,7 @@
   const modalColors = $("#modalColors");
   const nextImgBtn = $("#nextImgBtn");
 
-  function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+  const clamp = (n,a,b) => Math.max(a, Math.min(b,n));
 
   function getProduct(card){
     const name = card.dataset.name || "";
@@ -44,7 +44,6 @@
     const discount = clamp(Number(card.dataset.discount || 0), 0, 90);
     const category = card.dataset.category || "";
     const desc = card.dataset.desc || "";
-
     const images = parseCSV(card.dataset.images);
     const sizes = parseCSV(card.dataset.sizes);
     const colors = parseCSV(card.dataset.colors);
@@ -75,7 +74,7 @@
         }
       }
 
-      // image count badge
+      // image counter badge
       const media = card.querySelector(".media");
       if (media){
         let badge = media.querySelector(".img-count");
@@ -121,10 +120,8 @@
     modalPrice.textContent = money(p.price);
     modalDesc.textContent = p.desc || "—";
 
-    if (modalSale){
-      modalSale.textContent = p.discount > 0 ? `-${p.discount}%` : "";
-      modalSale.style.display = p.discount > 0 ? "" : "none";
-    }
+    modalSale.textContent = p.discount > 0 ? `-${p.discount}%` : "";
+    modalSale.style.display = p.discount > 0 ? "" : "none";
 
     modalImage.src = p.images[0] || "";
 
@@ -169,9 +166,7 @@
   });
 
   modalClose?.addEventListener("click", closeModal);
-  modal?.addEventListener("click", (e) => {
-    if (e.target === modal) closeModal();
-  });
+  modal?.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
 
   nextImgBtn?.addEventListener("click", nextModalImage);
   modalImage?.addEventListener("click", nextModalImage);
